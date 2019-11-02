@@ -1,4 +1,4 @@
-package control;
+package modelo;
 
 public class JDBCSimpleton {
 
