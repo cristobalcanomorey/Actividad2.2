@@ -20,7 +20,7 @@ public class Control {
 		}
 		return calculo;
 	}
-
+	
 	public static HtmlConstructor creaPagina(int tipoPagina, int tipoCuerpo) {
 		ArrayList<String> pagina = Integracion.tipoPagina(tipoPagina);
 		ArrayList<String> paginaConContenido = Integracion.tipoCuerpo(pagina, tipoCuerpo);

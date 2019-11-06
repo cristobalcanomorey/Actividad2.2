@@ -1,5 +1,7 @@
 package integracion;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 
 import control.Calculo;
@@ -9,7 +11,7 @@ import vista.HtmlConstructor;
 public class Integracion {
 
 	public static Hipoteca validarDatos(String prestamo, String interes, String plazo, String periodicidad)
-			throws NumberFormatException, NullPointerException{
+			throws NumberFormatException, NullPointerException {
 
 		float pres = Float.parseFloat(prestamo);
 		float inter = Float.parseFloat(interes);
@@ -18,7 +20,7 @@ public class Integracion {
 
 		int[] p = { 12, 4, 2 };
 
-		if (pres < 0 || inter <= 0 || inter > 100 || plaz < 0 || peri > 2 || peri < 0) {
+		if (pres > 0 || inter >= 0 || inter < 100 || plaz > 0 || peri < 3 || peri >= 0) {
 			Hipoteca validados = new Hipoteca(pres, inter, plaz, p[peri]);
 			return validados;
 		} else {
@@ -72,13 +74,15 @@ public class Integracion {
 		ArrayList<String> resultado = new ArrayList<String>();
 		resultado.add("<div id=\"resultado\">");
 		resultado.add("<h2>Resultado</h2>");
-		resultado.add("<p>Cuota hipotecaria: <span class=\"datosResultado\">" + c.getCuota() + "</span></p>");
+		resultado.add("<p>Cuota hipotecaria: <span class=\"datosResultado\">"
+				+ c.getCuota().setScale(2, RoundingMode.HALF_EVEN) + "</span></p>");
 		resultado.add("<p>Coste total de la hipoteca en <span class=\"datosHipoteca\">" + h.getPlazo()
-				+ "</span> años (capital más intereses): <span class=\"datosResultado\">" + c.getCosteTotal()
-				+ "</span></p>");
-		resultado.add("<p>De los cuales <span class=\"datosResultado\">" + c.getCosteTotalDeInteres()
-				+ "</span> son intereses equivalentes al <span class=\"datosHipoteca\">" + c.getInteresesEquivalentes()
-				+ "%</span></p>");
+				+ "</span> años (capital más intereses): <span class=\"datosResultado\">"
+				+ c.getCosteTotal().setScale(2, RoundingMode.HALF_EVEN) + "</span></p>");
+		resultado.add("<p>De los cuales <span class=\"datosResultado\">"
+				+ c.getCosteTotalDeInteres().setScale(2, RoundingMode.HALF_EVEN)
+				+ "</span> son intereses equivalentes al <span class=\"datosHipoteca\">"
+				+ c.getInteresesEquivalentes().setScale(2, RoundingMode.HALF_EVEN) + "%</span></p>");
 		resultado.add("</div>");
 		return resultado;
 	}

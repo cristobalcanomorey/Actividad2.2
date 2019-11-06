@@ -24,7 +24,7 @@ public class Main extends HttpServlet {
 		String interes = request.getParameter("interes");
 		String plazo = request.getParameter("plazo");
 		String periodicidad = request.getParameter("periodicidad");
-		boolean cuadro = false;//request.getParameter("cuadro") != null
+		boolean cuadro = request.getParameter("cuadro") != null;
 		try {
 			Hipoteca h = Control.generarHipoteca(prestamo,interes,plazo,periodicidad);
 			Calculo c = Control.calculaHipoteca(h,cuadro);
