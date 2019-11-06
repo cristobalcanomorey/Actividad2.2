@@ -11,31 +11,42 @@ import javax.servlet.http.HttpServletResponse;
 
 import control.Calculo;
 import control.Control;
+import modelo.entidad.Hipoteca;
 
 @WebServlet("/Main")
 public class Main extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    
+    	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException{
 		//página con/sin usuario
 		HtmlConstructor pagina = Control.creaPagina(1,1);
+		String prestamo = request.getParameter("capital");
+		String interes = request.getParameter("interes");
+		String plazo = request.getParameter("plazo");
+		String periodicidad = request.getParameter("periodicidad");
+		boolean cuadro = false;//request.getParameter("cuadro") != null
+		try {
+			Hipoteca h = Control.generarHipoteca(prestamo,interes,plazo,periodicidad);
+			Calculo c = Control.calculaHipoteca(h,cuadro);
+			pagina = Control.setResultado(pagina, c, h);
+		} catch(NumberFormatException e) {
+			//log
+			e.printStackTrace();
+		} catch(NullPointerException e) {
+			//log
+			e.printStackTrace();
+		}
+		
 		try {
 			printResponse(pagina, response);
 		} catch (IOException e) {
 			//log
+			e.printStackTrace();
 		}
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//página con/sin usuario y con cálculo
-//		doGet(request, response);
-		String prestamo = "";
-		String interes = "";
-		String plazo = "";
-		String periodicidad = "";
-		boolean cuadro = false; //request.getParameter("cuadro") != null
-		Calculo c = Control.calculaHipoteca(prestamo,interes,plazo,periodicidad,cuadro);
-		//printResponse con pagina + calculo
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException {
+
 	}
 	
 	private void printResponse(HtmlConstructor pagina, HttpServletResponse response) throws IOException {

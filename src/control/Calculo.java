@@ -11,6 +11,7 @@ public class Calculo {
 	private float costeTotal;
 	private float interesesTotal;
 	private float interesesEquivalentes;
+	private float costeTotalDeInteres;
 	private HashMap<Integer, ArrayList<Float>> cuadro;
 	
 	public Calculo(Hipoteca datos) {
@@ -19,6 +20,7 @@ public class Calculo {
 		this.costeTotal = resultados[1];
 		this.interesesTotal = resultados[2];
 		this.interesesEquivalentes = resultados[3];
+		this.costeTotalDeInteres = resultados[4];
 	}
 
 	public void generarCuadro() {
@@ -27,7 +29,7 @@ public class Calculo {
 	}
 
 	private float[] calcularHipoteca(Hipoteca datos) {
-		float[] resultado = new float[4];
+		float[] resultado = new float[5];
 		
 		
 		
@@ -39,11 +41,13 @@ public class Calculo {
 		double costeTotal = cuota*plazoMensual;
 		float interesesTotal = (float) (cuota-importe); 
 		float interesesEquivalentes = (float) (100-(importe/costeTotal)*100);
+		float costeTotalIntereses = (float) costeTotal - importe;
 		
 		resultado[0] = (float) cuota;
 		resultado[1] = (float) costeTotal;
 		resultado[2] = interesesTotal;
 		resultado[3] = interesesEquivalentes;
+		resultado[4] = costeTotalIntereses;
 		return resultado;
 	}
 
@@ -69,6 +73,10 @@ public class Calculo {
 
 	public float getInteresesEquivalentes() {
 		return interesesEquivalentes;
+	}
+	
+	public float getCosteTotalDeInteres() {
+		return costeTotalDeInteres;
 	}
 	
 }
