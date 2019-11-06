@@ -1,6 +1,9 @@
 package control;
 
+import java.util.ArrayList;
+
 import integracion.Integracion;
+import vista.HtmlConstructor;
 
 public class Control {
 
@@ -10,6 +13,17 @@ public class Control {
 			calculo.generarCuadro();
 		}
 		return calculo;
+	}
+	
+	public static HtmlConstructor creaPagina(int tipoPagina, int tipoCuerpo) {
+		ArrayList<String> pagina = Integracion.tipoPagina(tipoPagina);
+		ArrayList<String> paginaConContenido = Integracion.tipoCuerpo(pagina,tipoCuerpo);
+		return new HtmlConstructor(paginaConContenido);
+	}
+	
+	public static HtmlConstructor resultado(HtmlConstructor pagina,Calculo c){
+		
+		return pagina;
 	}
 
 }

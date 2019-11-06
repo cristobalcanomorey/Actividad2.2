@@ -1,5 +1,7 @@
 package vista;
 
+import java.util.ArrayList;
+
 public class HtmlConstructor {
 	private String doctype = "";
 	private String abreHtml = "";
@@ -7,54 +9,80 @@ public class HtmlConstructor {
 	private String abreBody = "";
 	private String navBar = "";
 	private String cuerpo = "";
+	private String resultado = "";
+	private String cuadro = "";
 	private String cierraBody = "";
 	private String cierraHtml = "";
-	private String[] tipoPagina = new String[3];
-	private String[] tipoCuerpo = new String[4];
 	
-	public HtmlConstructor(int tipoPag, int tipoCue) {
-		this.doctype = "<!DOCTYPE html>";
-		this.abreHtml = "<html>";
-		this.head = "<head>\r\n" + 
-				"        <title>TODO supply a title</title>\r\n" + 
-				"        <meta charset=\"UTF-8\">\r\n" + 
-				"        <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n" + 
-				"        <link  href=\"css/style.css\" rel=\"stylesheet\" type=\"text/css\" title=\"Color\" />\r\n" + 
-				"    </head>";
-		this.abreBody = "<body>";
-		this.navBar = "<ul id=\"menu\">\r\n" + 
-				"            <li>Calculo hipotecario</li>\r\n" + 
-				"            <li class=\"sesion\">Iniciar sesión</li>\r\n" + 
-				"        </ul>";
-		this.cuerpo = "<div id=\"formulario\">\r\n" + 
-				"            <h2>Calcular</h2>\r\n" + 
-				"            <form action=\"post\" class=\"Main\">\r\n" + 
-				"                <p>Capital de prestamo:</p>\r\n" + 
-				"                <input type=\"text\" name=\"capital\">\r\n" + 
-				"                <p>Interes</p>\r\n" + 
-				"                <input type=\"text\" name=\"interes\">\r\n" + 
-				"                <p>Plazos</p>\r\n" + 
-				"                <input type=\"text\" name=\"plazo\">\r\n" + 
-				"                <p>Periodicidad</p>\r\n" + 
-				"                <select name=\"periodicidad\">\r\n" + 
-				"                    <option value=\"0\">mensual</option>\r\n" + 
-				"                    <option value=\"1\">trimestral</option>\r\n" + 
-				"                    <option value=\"2\">semestral</option>\r\n" + 
-				"                </select>\r\n" + 
-				"                <p>Visualizar cuadro de amortización</p>\r\n" + 
-				"                <input type=\"checkbox\" name=\"cuadro\">\r\n" + 
-				"                <a href=\"Main\">Reset</a>\r\n" + 
-				"                <input type=\"submit\" value=\"Calcular\">\r\n" + 
-				"            </form>\r\n" + 
-				"        </div>";
-		this.cierraBody = "</body>";
-		this.cierraHtml = "</html>";
+	public HtmlConstructor(ArrayList<String> pagina) {
+		this.doctype = pagina.get(0);
+		this.abreHtml = pagina.get(1);
+		this.head = pagina.get(2);
+		this.abreBody = pagina.get(3);
+		this.navBar = pagina.get(4);
+		this.cuerpo = pagina.get(5);
+		this.cierraBody = pagina.get(6);
+		this.cierraHtml = pagina.get(7);
+	}
+
+	
+	
+	public String getResultado() {
+		return resultado;
+	}
+
+
+
+	public void setResultado(String resultado) {
+		this.resultado = resultado;
+	}
+
+
+
+	public String getCuadro() {
+		return cuadro;
+	}
+
+
+
+	public void setCuadro(String cuadro) {
+		this.cuadro = cuadro;
+	}
+
+
+
+	public String getDoctype() {
+		return doctype;
+	}
+
+	public String getAbreHtml() {
+		return abreHtml;
+	}
+
+	public String getHead() {
+		return head;
+	}
+
+	public String getAbreBody() {
+		return abreBody;
+	}
+
+	public String getNavBar() {
+		return navBar;
+	}
+
+	public String getCuerpo() {
+		return cuerpo;
+	}
+
+	public String getCierraBody() {
+		return cierraBody;
+	}
+
+	public String getCierraHtml() {
+		return cierraHtml;
 	}
 	
-	private String tipoPagina(int tipo) {
-		String[] tipoPagina = new String[3];
-		tipoPagina[0] = "";
-		return tipoPagina[tipo];
-	}
+		
 	
 }
