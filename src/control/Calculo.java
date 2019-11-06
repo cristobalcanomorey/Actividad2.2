@@ -30,6 +30,7 @@ public class Calculo {
 
 	}
 
+	//Cambiar big decimal a double
 	private BigDecimal[] calcularHipoteca(Hipoteca datos) {
 		BigDecimal[] resultado = new BigDecimal[5];
 
