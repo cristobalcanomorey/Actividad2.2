@@ -16,7 +16,7 @@ public class Control {
 	public static Calculo calculaHipoteca(Hipoteca h, boolean cuadro) {
 		Calculo calculo = new Calculo(h);
 		if (cuadro) {
-			calculo.generarCuadro();
+			calculo.generarCuadro(h.getPlazo()*12,h.getInteres(),h.getPrestamo());
 		}
 		return calculo;
 	}

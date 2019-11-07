@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 import control.Calculo;
 import modelo.entidad.Hipoteca;
-import vista.HtmlConstructor;
 
 public class Integracion {
 
@@ -70,7 +69,7 @@ public class Integracion {
 		return tipoPagina;
 	}
 
-	public static ArrayList<String> dibujarResultado(Calculo c, Hipoteca h) {
+	public static ArrayList<String> dibujarResultado(Calculo c, Hipoteca h) throws IllegalArgumentException{
 		ArrayList<String> resultado = new ArrayList<String>();
 		resultado.add("<div id=\"resultado\">");
 		resultado.add("<h2>Resultado</h2>");

@@ -1,7 +1,6 @@
 package control;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import modelo.entidad.Hipoteca;
 
@@ -12,7 +11,8 @@ public class Calculo {
 	private double interesesTotal;
 	private double interesesEquivalentes;
 	private double costeTotalDeInteres;
-	private HashMap<Integer, ArrayList<Float>> cuadro;
+	private ArrayList<ArrayList<Double>> cuadro;
+	private ArrayList<Double> fila;
 
 	public Calculo(Hipoteca datos) {
 
@@ -24,8 +24,32 @@ public class Calculo {
 		this.costeTotalDeInteres = resultados[4];
 	}
 
-	public void generarCuadro() {
-
+	public void generarCuadro(int meses, float interes,float capital) {
+		for (int i = 0; i < meses; i++) {
+			double capitalPendientePosterior;
+			if(i == 0) {
+				capitalPendientePosterior = (double)capital;
+			} else {
+				
+			}
+			cuadro.add(generarFila());
+		}
+	}
+	
+	public ArrayList<Double> generarFila() {
+		
+	}
+	
+	public double parteQEsAmortizacion(double parteQEsInteres) {
+		return cuota - parteQEsInteres;
+	}
+	
+	public double parteQEsInteres(double capitalPendienteAnterior, double interes) {
+		return capitalPendienteAnterior * (interes/100/12);
+	}
+	
+	public double capitalPendientePosterior(double capitalPendienteAnterior, double parteQEsAmortizacion) {
+		return capitalPendienteAnterior - parteQEsAmortizacion;
 	}
 
 	private double[] calcularHipoteca(Hipoteca datos) {
@@ -54,11 +78,11 @@ public class Calculo {
 		return resultado;
 	}
 
-	public HashMap<Integer, ArrayList<Float>> getCuadro() {
+	public ArrayList<ArrayList<Double>> getCuadro() {
 		return cuadro;
 	}
 
-	public void setCuadro(HashMap<Integer, ArrayList<Float>> cuadro) {
+	public void setCuadro(ArrayList<ArrayList<Double>> cuadro) {
 		this.cuadro = cuadro;
 	}
 
