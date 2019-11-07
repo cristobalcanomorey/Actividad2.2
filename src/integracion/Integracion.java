@@ -75,16 +75,24 @@ public class Integracion {
 		resultado.add("<div id=\"resultado\">");
 		resultado.add("<h2>Resultado</h2>");
 		resultado.add("<p>Cuota hipotecaria: <span class=\"datosResultado\">"
-				+ c.getCuota().setScale(2, RoundingMode.HALF_EVEN) + "</span></p>");
+				+ round(c.getCuota(),2) + "€</span></p>");
 		resultado.add("<p>Coste total de la hipoteca en <span class=\"datosHipoteca\">" + h.getPlazo()
 				+ "</span> años (capital más intereses): <span class=\"datosResultado\">"
-				+ c.getCosteTotal().setScale(2, RoundingMode.HALF_EVEN) + "</span></p>");
+				+ round(c.getCosteTotal(),2) + "€</span></p>");
 		resultado.add("<p>De los cuales <span class=\"datosResultado\">"
-				+ c.getCosteTotalDeInteres().setScale(2, RoundingMode.HALF_EVEN)
+				+ round(c.getCosteTotalDeInteres(),2) + "€"
 				+ "</span> son intereses equivalentes al <span class=\"datosHipoteca\">"
-				+ c.getInteresesEquivalentes().setScale(2, RoundingMode.HALF_EVEN) + "%</span></p>");
+				+ round(c.getInteresesEquivalentes(),2) + "%</span></p>");
 		resultado.add("</div>");
 		return resultado;
+	}
+	
+	public static double round(double value, int places) {
+	    if (places < 0) throw new IllegalArgumentException();
+
+	    BigDecimal bd = BigDecimal.valueOf(value);
+	    bd = bd.setScale(places, RoundingMode.HALF_UP);
+	    return bd.doubleValue();
 	}
 
 	public static String resultadoToString(ArrayList<String> resultado) {

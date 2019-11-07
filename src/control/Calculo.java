@@ -1,7 +1,5 @@
 package control;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -9,16 +7,16 @@ import modelo.entidad.Hipoteca;
 
 public class Calculo {
 
-	private BigDecimal cuota;
-	private BigDecimal costeTotal;
-	private BigDecimal interesesTotal;
-	private BigDecimal interesesEquivalentes;
-	private BigDecimal costeTotalDeInteres;
+	private double cuota;
+	private double costeTotal;
+	private double interesesTotal;
+	private double interesesEquivalentes;
+	private double costeTotalDeInteres;
 	private HashMap<Integer, ArrayList<Float>> cuadro;
 
 	public Calculo(Hipoteca datos) {
 
-		BigDecimal[] resultados = calcularHipoteca(datos);
+		double[] resultados = calcularHipoteca(datos);
 		this.cuota = resultados[0];
 		this.costeTotal = resultados[1];
 		this.interesesTotal = resultados[2];
@@ -30,41 +28,23 @@ public class Calculo {
 
 	}
 
-	//Cambiar big decimal a double
-	private BigDecimal[] calcularHipoteca(Hipoteca datos) {
-		BigDecimal[] resultado = new BigDecimal[5];
+	private double[] calcularHipoteca(Hipoteca datos) {
+		double[] resultado = new double[5];
 
-		float importe = datos.getPrestamo();
-		float interesAnual = datos.getInteres() / 100/12;
-		int plazoPeriodico = datos.getPlazo() *-12;
-
-		System.out.println("importe: " + importe);
-		System.out.println("interesAnual: " + interesAnual);
-		System.out.println("plazoPeriodico: " + plazoPeriodico);
+		double importe = (double) datos.getPrestamo();
+		double interesAnual = (double) datos.getInteres() / 100/12;
+		int plazoPeriodico = datos.getPlazo();
 		
-		BigDecimal imp = new BigDecimal(importe);
-		BigDecimal interAnu = new BigDecimal(interesAnual);
+		double powr = Math.pow(1+interesAnual,plazoPeriodico*-12);
 		
-		BigDecimal pow = new BigDecimal(1);	
-		pow.add(interAnu);
-		pow.pow(plazoPeriodico);
+		double division = (1-powr)/interesAnual;
 		
-		BigDecimal divisio = new BigDecimal(1).subtract(pow);
-		divisio.divide(interAnu, RoundingMode.HALF_EVEN);
-		
-		BigDecimal cuota = imp.divide(divisio, RoundingMode.HALF_EVEN);
-		
-		
-//		BigDecimal pow = interAnu.add(new BigDecimal(1)).pow(plazoPeriodico);
-//
-//		BigDecimal cuota = imp.divide((new BigDecimal(1).subtract(pow)).divide(interAnu, RoundingMode.HALF_EVEN),
-//				RoundingMode.HALF_EVEN);
-
-		BigDecimal costeTotal = cuota.multiply(new BigDecimal(plazoPeriodico));
-		BigDecimal interesesTotal = cuota.subtract(imp);
-		BigDecimal interesesEquivalentes = new BigDecimal(100)
-				.subtract((imp.divide(costeTotal, RoundingMode.HALF_EVEN)).multiply(new BigDecimal(100)));
-		BigDecimal costeTotalIntereses = costeTotal.subtract(imp);
+		double cuota = importe/division;
+				
+		double costeTotal = cuota*(plazoPeriodico*12);
+		double interesesTotal = cuota-importe;
+		double interesesEquivalentes = 100-((importe/costeTotal)*100);
+		double costeTotalIntereses = costeTotal-importe;
 
 		resultado[0] = cuota;
 		resultado[1] = costeTotal;
@@ -82,23 +62,23 @@ public class Calculo {
 		this.cuadro = cuadro;
 	}
 
-	public BigDecimal getCuota() {
+	public double getCuota() {
 		return cuota;
 	}
 
-	public BigDecimal getCosteTotal() {
+	public double getCosteTotal() {
 		return costeTotal;
 	}
 
-	public BigDecimal getInteresesTotal() {
+	public double getInteresesTotal() {
 		return interesesTotal;
 	}
 
-	public BigDecimal getInteresesEquivalentes() {
+	public double getInteresesEquivalentes() {
 		return interesesEquivalentes;
 	}
 
-	public BigDecimal getCosteTotalDeInteres() {
+	public double getCosteTotalDeInteres() {
 		return costeTotalDeInteres;
 	}
 
