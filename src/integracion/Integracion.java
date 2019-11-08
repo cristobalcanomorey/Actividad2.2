@@ -2,6 +2,8 @@ package integracion;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import control.Calculo;
@@ -38,14 +40,14 @@ public class Integracion {
 		tipoPagina.add("<body>");
 		if (tipoDePagina == 1) {
 			tipoPagina.add("<ul id=\"menu\">" + "<li><a href='Main'>Calculo hipotecario</a></li>"
-					+ "<li class=\"sesion\"><a href='Registro'>Iniciar sesión</a></li>" + "</ul>");
+					+ "<li class=\"sesion\"><a href='Login'>Iniciar sesión</a></li>" +"<li class=\"sesion\"><a href='Registro'>Registrate</a></li>"+ "</ul>");
 			tipoPagina.add("");
 		} else if (tipoDePagina == 2) {
 			// menu con usuario logeado
 			tipoPagina.add("<ul id=\"menu\">" + "<li><a href='Main'>Calculo hipotecario</a></li>"
 					+ "<li class=\"sesion\">"+usuarioLogeado+"</li>"
 					+ "<li class='historial'><a href='Main?historial=si'>Historial</a></li>"
-					+ "<li class='historial'><a href='Main'>Logout</a></li>"+"</ul>");
+					+ "<li class='logout'><a href='Logout'>Logout</a></li>"+"</ul>");
 			tipoPagina.add("");
 		} else {
 			tipoPagina.add("");
@@ -102,7 +104,7 @@ public class Integracion {
 					"                <input type=\"text\" name=\"nombre\">\r\n" + 
 					"                <p>Contraseña</p>\r\n" + 
 					"                <input type=\"password\" name=\"password\">\r\n" + 
-					"                <input type=\"submit\" value=\"Registrar\">\r\n" + 
+					"                <input type=\"submit\" value=\"Iniciar Sesion\">\r\n" + 
 					"            </form>\r\n" + 
 					"        </div>");
 		}
@@ -174,6 +176,37 @@ public class Integracion {
 				"        </div>");
 		
 		return cuadroString;
+	}
+
+	public static ArrayList<String> dibujarHistorial(ResultSet tabla) throws SQLException {
+		ArrayList<String> historial = new ArrayList<String>();
+		historial.add("<div id=\"historial\">\r\n" + 
+				"            <h2>Historial</h2>\r\n" + 
+				"            <table>\r\n" + 
+				"                <tbody>\r\n" + 
+				"                    <tr>\r\n" + 
+				"                        <th>Fecha</th>\r\n" + 
+				"                        <th>Prestamo</th>\r\n" + 
+				"                        <th>Interes</th>\r\n" + 
+				"                        <th>Plazo</th>\r\n" + 
+				"                        <th>Periodicidad</th>\r\n" + 
+				"                        <th>Volver a calcular</th>\r\n" + 
+				"                    </tr>\r\n" + 
+				"                    <tr>");
+		while(tabla.next()) {
+			historial.add("<tr><form action='Main' method='post'>");
+			historial.add("<input type=\"hidden\" name=\"fecha\" value='"+tabla.getString("fecha")+"'>"+tabla.getString("fecha"));
+			historial.add("<input type=\"hidden\" name=\"prestamo\" value='"+tabla.getString("prestamo")+"'>"+tabla.getString("prestamo"));
+			historial.add("<input type=\"hidden\" name=\"interes\" value='"+tabla.getString("interes")+"'>"+tabla.getString("interes"));
+			historial.add("<input type=\"hidden\" name=\"plazo\" value='"+tabla.getString("plazo")+"'>"+tabla.getString("plazo"));
+			historial.add("<input type=\"hidden\" name=\"periodicidad\" value='"+tabla.getString("periodicidad")+"'>"+tabla.getString("plazo"));
+			historial.add("<input type=\"submit\" value=\"Calcular\">");
+			historial.add("</form></tr>");
+		}
+		historial.add("</tbody>\r\n" + 
+				"            </table>\r\n" + 
+				"        </div>");
+		return historial;
 	}
 
 }

@@ -7,7 +7,7 @@ import vista.Main;
 
 public class LogSingleton {
 	private static final LogSingleton INSTANCE = new LogSingleton();
-	private Logger logger = (Logger) LoggerFactory.getLogger(Main.class);
+	private Logger loggerMain = (Logger) LoggerFactory.getLogger(Main.class);
 	
 	private LogSingleton() {}
 	
@@ -16,7 +16,7 @@ public class LogSingleton {
 	}
 
 	public Logger getLog() {
-		return logger;
+		return loggerMain;
 	}
 	
 }

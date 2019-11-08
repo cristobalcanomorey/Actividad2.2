@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -36,7 +37,7 @@ public class Control {
 	}
 	
 	public static HtmlConstructor creaPagina(int tipoPagina, int tipoCuerpo, Hipoteca h,boolean cuadroChecked, String usuarioLogeado) {
-		if (tipoCuerpo == 2 | tipoCuerpo == 3) {
+		if (tipoCuerpo == 2 | tipoCuerpo == 3 | tipoCuerpo == 4) {
 			tipoPagina = 0;
 		}
 		ArrayList<String> pagina = Integracion.tipoPagina(tipoPagina,usuarioLogeado);
@@ -72,6 +73,7 @@ public class Control {
 	}
 
 	public static ResultSet getUsuariosDeBD() {
+		
 		ResultSet nombres = null;
 		try {
 			nombres = UsuarioCRUD.selectTodos();
@@ -83,6 +85,7 @@ public class Control {
 	}
 
 	public static boolean guardarUsuarioEnBD(String usuario, String password, String fPerfil) {
+		
 		Usuario u = new Usuario(usuario,password);
 		u.setfPerfil(fPerfil);
 		try {
@@ -96,7 +99,7 @@ public class Control {
 	}
 
 	public static void getConexion(String string, String string2) {
-		JDBCSingleton.getInstance();
+		
 		try {
 			JDBCSingleton.setConnection("java:/comp/env", "jdbc/aplicacion");
 		} catch (ClassNotFoundException | SQLException | NamingException e) {
@@ -106,6 +109,7 @@ public class Control {
 	}
 
 	public static ResultSet getUsuarioYPass(String usuario) {
+		
 		ResultSet user = null;
 		try {
 			user = UsuarioCRUD.selectNombre(usuario);
@@ -141,6 +145,7 @@ public class Control {
 	}
 
 	public static void insertHipoteca(Hipoteca h, String string) {
+		
 		int id = Integer.valueOf(string);
 		try {
 			HipotecaCRUD.insert(h,id);
@@ -151,9 +156,35 @@ public class Control {
 		
 	}
 
-	public static Date getCurrentTime() {
-		// TODO Auto-generated method stub
-		return n;
+	
+
+	public static String getFechaFormatoBD(Date ahora) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		return sdf.format(ahora);
+	}
+
+	public static HtmlConstructor setHistorial(HtmlConstructor pagina,ResultSet rs) throws SQLException {
+		
+		ArrayList<String> resultado = Integracion.dibujarHistorial(rs);
+		pagina.setHistorial(Integracion.arrayListToString(resultado));
+		
+		return pagina;
+	}
+
+	public static ResultSet getHistorial(String registrado) {
+		ResultSet user = null;
+		ResultSet historial = null;
+		try {
+			user = UsuarioCRUD.selectNombre(registrado);
+			while(user.next()) {
+				historial = UsuarioCRUD.selectHistorial(user.getString("id"));
+				break;
+			}
+		} catch (SQLException e) {
+			// log
+			e.printStackTrace();
+		}
+		return historial;
 	}
 
 }

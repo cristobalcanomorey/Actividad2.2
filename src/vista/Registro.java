@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import control.Control;
+import control.LogSingleton;
+import modelo.JDBCSingleton;
 
 @WebServlet("/Registro")
 public class Registro extends HttpServlet {
@@ -28,6 +30,7 @@ public class Registro extends HttpServlet {
 //	<!-- Alerta que he substituït & per &amp; a la url -->
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException {
+		LogSingleton.getInstance();
 		HtmlConstructor pagina = Control.creaPagina(1, 2, null, false,"");
 		try {
 			Control.printResponse(pagina, response);
@@ -39,9 +42,11 @@ public class Registro extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		LogSingleton.getInstance();
 		String usuario = request.getParameter("nombre");
 		String password = request.getParameter("password");
 		String fPerfil = "";
+		JDBCSingleton.getInstance();
 		Control.getConexion("java:/comp/env", "jdbc/aplicacion");
 		ResultSet usuarios = Control.getUsuariosDeBD();
 		boolean encontrado = false;

@@ -11,6 +11,7 @@ public class HtmlConstructor {
 	private String cuerpo = "";
 	private String resultado = "";
 	private String cuadro = "";
+	private String historial = "";
 	private String cierraBody = "";
 	private String cierraHtml = "";
 	
@@ -27,6 +28,18 @@ public class HtmlConstructor {
 
 	
 	
+	public String getHistorial() {
+		return historial;
+	}
+
+
+
+	public void setHistorial(String historial) {
+		this.historial = historial;
+	}
+
+
+
 	public String getResultado() {
 		return resultado;
 	}
