@@ -48,6 +48,10 @@ public class Hipoteca {
 	public int getPeriodicidad() {
 		return periodicidad;
 	}
+	
+	public void setFecha(Date fecha) {
+		this.fecha = fecha;
+	}
 
 	public Date getFecha() {
 		return fecha;

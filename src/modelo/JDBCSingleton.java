@@ -1,14 +1,19 @@
 package modelo;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
 
 public class JDBCSingleton {
 	private static final JDBCSingleton INSTANCE = new JDBCSingleton();
 	private static Connection conn = null;
 	private static Statement stmt = null;
+	private static Context initContext;
 	
 	private JDBCSingleton() {}
 	
@@ -20,9 +25,12 @@ public class JDBCSingleton {
 		return conn;
 	}
 	
-	public static void setConnection(String dri, String db, String usr, String pas) throws ClassNotFoundException, SQLException {
-		Class.forName(dri);
-		JDBCSingleton.conn = DriverManager.getConnection(db,usr,pas);
+	public static void setConnection(String initC, String envC) throws ClassNotFoundException, SQLException, NamingException {
+		initContext = new InitialContext();
+		Context envContext = (Context)initContext.lookup(initC);
+		DataSource ds = (DataSource) envContext.lookup(envC);
+		
+		JDBCSingleton.conn = ds.getConnection();
 	}
 	
 	public static Statement getStatement() {

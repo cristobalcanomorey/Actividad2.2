@@ -2,12 +2,22 @@ package control;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 
+import javax.naming.NamingException;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import integracion.Integracion;
+import modelo.HipotecaCRUD;
+import modelo.JDBCSingleton;
+import modelo.UsuarioCRUD;
 import modelo.entidad.Hipoteca;
+import modelo.entidad.Usuario;
 import vista.HtmlConstructor;
 
 public class Control {
@@ -25,8 +35,11 @@ public class Control {
 		return calculo;
 	}
 	
-	public static HtmlConstructor creaPagina(int tipoPagina, int tipoCuerpo, Hipoteca h,boolean cuadroChecked) {
-		ArrayList<String> pagina = Integracion.tipoPagina(tipoPagina);
+	public static HtmlConstructor creaPagina(int tipoPagina, int tipoCuerpo, Hipoteca h,boolean cuadroChecked, String usuarioLogeado) {
+		if (tipoCuerpo == 2 | tipoCuerpo == 3) {
+			tipoPagina = 0;
+		}
+		ArrayList<String> pagina = Integracion.tipoPagina(tipoPagina,usuarioLogeado);
 		ArrayList<String> paginaConContenido = Integracion.tipoCuerpo(pagina, tipoCuerpo,h,cuadroChecked);
 		return new HtmlConstructor(paginaConContenido);
 	}
@@ -56,6 +69,91 @@ public class Control {
 		writer.print(pagina.getCuadro());
 		writer.print(pagina.getCierraBody());
 		writer.print(pagina.getCierraHtml());
+	}
+
+	public static ResultSet getUsuariosDeBD() {
+		ResultSet nombres = null;
+		try {
+			nombres = UsuarioCRUD.selectTodos();
+		} catch (SQLException e) {
+			// log
+			e.printStackTrace();
+		}
+		return nombres;
+	}
+
+	public static boolean guardarUsuarioEnBD(String usuario, String password, String fPerfil) {
+		Usuario u = new Usuario(usuario,password);
+		u.setfPerfil(fPerfil);
+		try {
+			UsuarioCRUD.insert(u);
+			return false;
+		} catch (ClassNotFoundException | SQLException | NamingException e) {
+			//log
+			e.printStackTrace();
+			return true;
+		}
+	}
+
+	public static void getConexion(String string, String string2) {
+		JDBCSingleton.getInstance();
+		try {
+			JDBCSingleton.setConnection("java:/comp/env", "jdbc/aplicacion");
+		} catch (ClassNotFoundException | SQLException | NamingException e) {
+			// log
+			e.printStackTrace();
+		}
+	}
+
+	public static ResultSet getUsuarioYPass(String usuario) {
+		ResultSet user = null;
+		try {
+			user = UsuarioCRUD.selectNombre(usuario);
+		} catch (SQLException e) {
+			// log
+			e.printStackTrace();
+		}
+		return user;
+	}
+
+	public static void cerrarConexionBD() throws SQLException {
+		
+		if(JDBCSingleton.getStatement() != null) {
+			JDBCSingleton.getConnection().close();
+		}
+		if(JDBCSingleton.getConnection() != null) {
+			JDBCSingleton.getConnection().close();
+		}
+		
+	}
+	
+	public static String getLoggedUser(HttpServletRequest request) {
+		String user = "";
+
+		// Comprobamos si tenemos una sesión y obtenemos su nombre de usuario.
+		HttpSession session = request.getSession(false);
+
+		if (session != null) {
+			user = (String) session.getAttribute("usuario");
+		}
+
+		return user;
+	}
+
+	public static void insertHipoteca(Hipoteca h, String string) {
+		int id = Integer.valueOf(string);
+		try {
+			HipotecaCRUD.insert(h,id);
+		} catch (SQLException e) {
+			// log
+			e.printStackTrace();
+		}
+		
+	}
+
+	public static Date getCurrentTime() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

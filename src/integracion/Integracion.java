@@ -28,7 +28,7 @@ public class Integracion {
 
 	}
 
-	public static ArrayList<String> tipoPagina(int tipoDePagina) {
+	public static ArrayList<String> tipoPagina(int tipoDePagina, String usuarioLogeado) {
 		ArrayList<String> tipoPagina = new ArrayList<String>();
 		tipoPagina.add("<!DOCTYPE html>");
 		tipoPagina.add("<html lang=\"es\">");
@@ -42,6 +42,14 @@ public class Integracion {
 			tipoPagina.add("");
 		} else if (tipoDePagina == 2) {
 			// menu con usuario logeado
+			tipoPagina.add("<ul id=\"menu\">" + "<li><a href='Main'>Calculo hipotecario</a></li>"
+					+ "<li class=\"sesion\">"+usuarioLogeado+"</li>"
+					+ "<li class='historial'><a href='Main?historial=si'>Historial</a></li>"
+					+ "<li class='historial'><a href='Main'>Logout</a></li>"+"</ul>");
+			tipoPagina.add("");
+		} else {
+			tipoPagina.add("");
+			tipoPagina.add("");
 		}
 		tipoPagina.add("</body>");
 		tipoPagina.add("</html>");
@@ -71,13 +79,13 @@ public class Integracion {
 							+ "<select name=\"periodicidad\">" + "<option value=\"0\">mensual</option>"
 							+ "<option value=\"1\">trimestral</option>" + "<option value=\"2\">semestral</option>"
 							+ "</select>" + "<p><input type='checkbox' name='cuadro' "+c+">Visualizar cuadro de amortización</p>"
-							+ "<a href=\"Main\">Reset</a>"
+							+ ""
 							+ "<input type=\"submit\" value=\"Calcular\">" + "</form>" + "</div>");
 		} else if (tipoDeCuerpo == 2) {
 			// Formulario de registrarse
 			tipoPagina.add(5,"<div id=\"registro\">\r\n" + 
-					"            <h2>Calcular</h2>\r\n" + 
-					"            <form action=\"post\" class=\"Registro\">\r\n" + 
+					"            <h2>Registrate</h2>\r\n" + 
+					"            <form action=\"Registro\" method=\"post\">\r\n" + 
 					"                <p>Nombre de usuario</p>\r\n" + 
 					"                <input type=\"text\" name=\"nombre\">\r\n" + 
 					"                <p>Contraseña</p>\r\n" + 
@@ -85,7 +93,19 @@ public class Integracion {
 					"                <input type=\"submit\" value=\"Registrar\">\r\n" + 
 					"            </form>\r\n" + 
 					"        </div>");
-		} 
+		} else if(tipoDeCuerpo == 3) {
+			//formulario de login
+			tipoPagina.add(5,"<div id=\"login\">\r\n" + 
+					"            <h2>Iniciar sesión</h2>\r\n" + 
+					"            <form action=\"Login\" method=\"post\">\r\n" + 
+					"                <p>Nombre de usuario</p>\r\n" + 
+					"                <input type=\"text\" name=\"nombre\">\r\n" + 
+					"                <p>Contraseña</p>\r\n" + 
+					"                <input type=\"password\" name=\"password\">\r\n" + 
+					"                <input type=\"submit\" value=\"Registrar\">\r\n" + 
+					"            </form>\r\n" + 
+					"        </div>");
+		}
 		return tipoPagina;
 	}
 

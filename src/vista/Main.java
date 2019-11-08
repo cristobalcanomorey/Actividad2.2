@@ -1,7 +1,9 @@
 package vista;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,8 +20,17 @@ public class Main extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException{
-		//página con/sin usuario
-		HtmlConstructor pagina = Control.creaPagina(1,1,null,false);
+
+		String registrado =  Control.getLoggedUser(request);
+		int tipoDePagina = 1;
+		boolean guardarHipotecas = false;
+		HtmlConstructor pagina;
+		if(registrado != "") {
+			tipoDePagina = 2;
+			guardarHipotecas = true;
+		}
+		pagina = Control.creaPagina(tipoDePagina,1,null,false,registrado);
+		
 		String prestamo = request.getParameter("capital");
 		String interes = request.getParameter("interes");
 		String plazo = request.getParameter("plazo");
@@ -27,8 +38,17 @@ public class Main extends HttpServlet {
 		boolean cuadro = request.getParameter("cuadro") != null;
 		try {
 			Hipoteca h = Control.generarHipoteca(prestamo,interes,plazo,periodicidad);
+			if(guardarHipotecas) {
+				ResultSet rs = Control.getUsuarioYPass(registrado);
+				Date ahora = Control.getCurrentTime();
+				h.setFecha(ahora);
+				while(rs.next()) {
+					Control.insertHipoteca(h,rs.getString("id"));
+				}
+				
+			}
 			Calculo c = Control.calculaHipoteca(h,cuadro);
-			pagina = Control.creaPagina(1,1,h,cuadro);
+			pagina = Control.creaPagina(tipoDePagina,1,h,cuadro,registrado);
 			pagina = Control.setResultado(pagina, c, h, cuadro);
 		} catch(NumberFormatException e) {
 			//log
@@ -37,6 +57,9 @@ public class Main extends HttpServlet {
 			if(prestamo!=null^interes!=null^plazo!=null^periodicidad!=null) {
 				//log se ha dejado algun campo vacío
 			}
+		} catch (SQLException e) {
+			// log
+			e.printStackTrace();
 		}
 		
 		try {
@@ -46,11 +69,6 @@ public class Main extends HttpServlet {
 			e.printStackTrace();
 		}
 	}
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException {
-
-	}
-	
 	
 
 }
