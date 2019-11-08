@@ -11,8 +11,8 @@ public class Calculo {
 	private double interesesTotal;
 	private double interesesEquivalentes;
 	private double costeTotalDeInteres;
-	private ArrayList<ArrayList<Double>> cuadro;
-	private ArrayList<Double> fila;
+	private ArrayList<ArrayList<Double>> cuadro = new ArrayList<ArrayList<Double>>();
+	private ArrayList<Double> fila = new ArrayList<Double>();
 
 	public Calculo(Hipoteca datos) {
 
@@ -26,17 +26,28 @@ public class Calculo {
 
 	public void generarCuadro(int meses, float interes,float capital) {
 		for (int i = 0; i < meses; i++) {
-			double capitalPendientePosterior;
+			double capitalPendienteAnterior;
 			if(i == 0) {
-				capitalPendientePosterior = (double)capital;
+				capitalPendienteAnterior = (double)capital;
 			} else {
-				
+				capitalPendienteAnterior = fila.get(5);
+				fila = new ArrayList<Double>();
 			}
-			cuadro.add(generarFila());
+			generarFila(i,capitalPendienteAnterior, interes);
+			cuadro.add(fila);
 		}
 	}
 	
-	public ArrayList<Double> generarFila() {
+	public void generarFila(int mes, double capitalPendienteAnterior, double interes) {
+		double parteQEsInteres = capitalPendienteAnterior*(interes/100/12);
+		double parteQEsAmortizacion = cuota-parteQEsInteres;
+		double dMes = mes+1;
+		fila.add(dMes);
+		fila.add(capitalPendienteAnterior);
+		fila.add(cuota);
+		fila.add(parteQEsAmortizacion);
+		fila.add(parteQEsInteres);
+		fila.add(capitalPendienteAnterior-parteQEsAmortizacion);
 		
 	}
 	

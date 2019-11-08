@@ -28,7 +28,7 @@ public class Main extends HttpServlet {
 		try {
 			Hipoteca h = Control.generarHipoteca(prestamo,interes,plazo,periodicidad);
 			Calculo c = Control.calculaHipoteca(h,cuadro);
-			pagina = Control.setResultado(pagina, c, h);
+			pagina = Control.setResultado(pagina, c, h, cuadro);
 		} catch(NumberFormatException e) {
 			//log
 			e.printStackTrace();

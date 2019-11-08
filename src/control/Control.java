@@ -27,9 +27,15 @@ public class Control {
 		return new HtmlConstructor(paginaConContenido);
 	}
 
-	public static HtmlConstructor setResultado(HtmlConstructor pagina, Calculo c, Hipoteca h) {
+	public static HtmlConstructor setResultado(HtmlConstructor pagina, Calculo c, Hipoteca h,boolean cuadro) {
 		ArrayList<String> resultado = Integracion.dibujarResultado(c, h);
-		pagina.setResultado(Integracion.resultadoToString(resultado));
+		pagina.setResultado(Integracion.arrayListToString(resultado));
+		
+		if(cuadro) {
+			ArrayList<String> arrayCuadro = Integracion.dibujarCuadro(c);
+			pagina.setCuadro(Integracion.arrayListToString(arrayCuadro));
+		}
+		
 		return pagina;
 	}
 

@@ -94,12 +94,46 @@ public class Integracion {
 	    return bd.doubleValue();
 	}
 
-	public static String resultadoToString(ArrayList<String> resultado) {
+	public static String arrayListToString(ArrayList<String> resultado) {
 		String r = "";
 		for (String resul : resultado) {
 			r += resul;
 		}
 		return r;
+	}
+
+	public static ArrayList<String> dibujarCuadro(Calculo c) {
+		ArrayList<String> cuadroString = new ArrayList<String>();
+		ArrayList<ArrayList<Double>> cuadro = c.getCuadro();
+		cuadroString.add("<div id=\"cuadro\">\r\n" + 
+				"            <h2>Cuadro de amortización</h2>\r\n" + 
+				"            <table>\r\n" + 
+				"                <tbody>\r\n" + 
+				"                    <tr>\r\n" + 
+				"                        <th>Mes</th>\r\n" + 
+				"                        <th>Capital pendiente anterior</th>\r\n" + 
+				"                        <th>Cuota a pagar</th>\r\n" + 
+				"                        <th>Parte de la cuota que es amortización</th>\r\n" + 
+				"                        <th>Parte de la cuota que es interés</th>\r\n" + 
+				"                        <th>Capital pendiente posterior</th>\r\n" + 
+				"                    </tr>");
+		for (ArrayList<Double> fila : cuadro) {
+			cuadroString.add("<tr>");
+			for (double dato : fila) {
+				if(fila.indexOf(dato) == 0) {
+					cuadroString.add("<td>"+(int)dato+"</td>");
+				}else {
+					cuadroString.add("<td>"+round(dato,2)+"</td>");
+				}
+			}
+			cuadroString.add("</tr>");
+		}
+		
+		cuadroString.add("</tbody>\r\n" + 
+				"            </table>\r\n" + 
+				"        </div>");
+		
+		return cuadroString;
 	}
 
 }
