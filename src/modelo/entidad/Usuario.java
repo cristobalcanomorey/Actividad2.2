@@ -6,8 +6,8 @@ public class Usuario {
 	private String nombre;
 	private String password;
 	private String fPerfil;
-	
-	public Usuario(String nombre, String password){
+
+	public Usuario(String nombre, String password) {
 		this.nombre = nombre;
 		this.password = password;
 	}
@@ -31,7 +31,5 @@ public class Usuario {
 	public void setfPerfil(String fPerfil) {
 		this.fPerfil = fPerfil;
 	}
-	
-	
-	
+
 }

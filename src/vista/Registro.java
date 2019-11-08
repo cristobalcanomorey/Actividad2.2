@@ -31,7 +31,7 @@ public class Registro extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException {
 		LogSingleton.getInstance();
-		HtmlConstructor pagina = Control.creaPagina(1, 2, null, false,"");
+		HtmlConstructor pagina = Control.creaPagina(1, 2, null, false, "");
 		try {
 			Control.printResponse(pagina, response);
 		} catch (IOException e) {
@@ -83,7 +83,7 @@ public class Registro extends HttpServlet {
 		} catch (SQLException e) {
 			// log
 			e.printStackTrace();
-		}finally {
+		} finally {
 			try {
 				Control.cerrarConexionBD();
 			} catch (SQLException e) {

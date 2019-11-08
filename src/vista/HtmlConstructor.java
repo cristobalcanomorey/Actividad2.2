@@ -14,7 +14,7 @@ public class HtmlConstructor {
 	private String historial = "";
 	private String cierraBody = "";
 	private String cierraHtml = "";
-	
+
 	public HtmlConstructor(ArrayList<String> pagina) {
 		this.doctype = pagina.get(0);
 		this.abreHtml = pagina.get(1);
@@ -26,43 +26,29 @@ public class HtmlConstructor {
 		this.cierraHtml = pagina.get(7);
 	}
 
-	
-	
 	public String getHistorial() {
 		return historial;
 	}
-
-
 
 	public void setHistorial(String historial) {
 		this.historial = historial;
 	}
 
-
-
 	public String getResultado() {
 		return resultado;
 	}
-
-
 
 	public void setResultado(String resultado) {
 		this.resultado = resultado;
 	}
 
-
-
 	public String getCuadro() {
 		return cuadro;
 	}
 
-
-
 	public void setCuadro(String cuadro) {
 		this.cuadro = cuadro;
 	}
-
-
 
 	public String getDoctype() {
 		return doctype;
@@ -95,7 +81,5 @@ public class HtmlConstructor {
 	public String getCierraHtml() {
 		return cierraHtml;
 	}
-	
-		
-	
+
 }

@@ -24,41 +24,41 @@ public class Calculo {
 		this.costeTotalDeInteres = resultados[4];
 	}
 
-	public void generarCuadro(int meses, float interes,float capital) {
+	public void generarCuadro(int meses, float interes, float capital) {
 		for (int i = 0; i < meses; i++) {
 			double capitalPendienteAnterior;
-			if(i == 0) {
-				capitalPendienteAnterior = (double)capital;
+			if (i == 0) {
+				capitalPendienteAnterior = (double) capital;
 			} else {
 				capitalPendienteAnterior = fila.get(5);
 				fila = new ArrayList<Double>();
 			}
-			generarFila(i,capitalPendienteAnterior, interes);
+			generarFila(i, capitalPendienteAnterior, interes);
 			cuadro.add(fila);
 		}
 	}
-	
+
 	public void generarFila(int mes, double capitalPendienteAnterior, double interes) {
-		double parteQEsInteres = capitalPendienteAnterior*(interes/100/12);
-		double parteQEsAmortizacion = cuota-parteQEsInteres;
-		double dMes = mes+1;
+		double parteQEsInteres = capitalPendienteAnterior * (interes / 100 / 12);
+		double parteQEsAmortizacion = cuota - parteQEsInteres;
+		double dMes = mes + 1;
 		fila.add(dMes);
 		fila.add(capitalPendienteAnterior);
 		fila.add(cuota);
 		fila.add(parteQEsAmortizacion);
 		fila.add(parteQEsInteres);
-		fila.add(capitalPendienteAnterior-parteQEsAmortizacion);
-		
+		fila.add(capitalPendienteAnterior - parteQEsAmortizacion);
+
 	}
-	
+
 	public double parteQEsAmortizacion(double parteQEsInteres) {
 		return cuota - parteQEsInteres;
 	}
-	
+
 	public double parteQEsInteres(double capitalPendienteAnterior, double interes) {
-		return capitalPendienteAnterior * (interes/100/12);
+		return capitalPendienteAnterior * (interes / 100 / 12);
 	}
-	
+
 	public double capitalPendientePosterior(double capitalPendienteAnterior, double parteQEsAmortizacion) {
 		return capitalPendienteAnterior - parteQEsAmortizacion;
 	}
@@ -67,19 +67,19 @@ public class Calculo {
 		double[] resultado = new double[5];
 
 		double importe = (double) datos.getPrestamo();
-		double interesAnual = (double) datos.getInteres() / 100/12;
+		double interesAnual = (double) datos.getInteres() / 100 / 12;
 		int plazoPeriodico = datos.getPlazo();
-		
-		double powr = Math.pow(1+interesAnual,plazoPeriodico*-12);
-		
-		double division = (1-powr)/interesAnual;
-		
-		double cuota = importe/division;
-				
-		double costeTotal = cuota*(plazoPeriodico*12);
-		double interesesTotal = cuota-importe;
-		double interesesEquivalentes = 100-((importe/costeTotal)*100);
-		double costeTotalIntereses = costeTotal-importe;
+
+		double powr = Math.pow(1 + interesAnual, plazoPeriodico * -12);
+
+		double division = (1 - powr) / interesAnual;
+
+		double cuota = importe / division;
+
+		double costeTotal = cuota * (plazoPeriodico * 12);
+		double interesesTotal = cuota - importe;
+		double interesesEquivalentes = 100 - ((importe / costeTotal) * 100);
+		double costeTotalIntereses = costeTotal - importe;
 
 		resultado[0] = cuota;
 		resultado[1] = costeTotal;

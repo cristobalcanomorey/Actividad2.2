@@ -16,7 +16,7 @@ public class HipotecaCRUD {
 		stmt = JDBCSingleton.getStatement();
 
 		String fecha = Control.getFechaFormatoBD(h.getFecha());
-		
+
 		stmt.executeUpdate("INSERT INTO hipoteca (fecha,prestamo,interes,plazo,periodicidad,idUsuario) VALUES ('"
 				+ fecha + "','" + h.getPrestamo() + "','" + h.getInteres() + "','" + h.getPlazo() + "','"
 				+ h.getPeriodicidad() + "','" + id + "')");

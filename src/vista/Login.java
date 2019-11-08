@@ -32,7 +32,7 @@ public class Login extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		LogSingleton.getInstance();
-		HtmlConstructor pagina = Control.creaPagina(1, 3, null, false,"");
+		HtmlConstructor pagina = Control.creaPagina(1, 3, null, false, "");
 		try {
 			Control.printResponse(pagina, response);
 		} catch (IOException e) {
@@ -54,7 +54,7 @@ public class Login extends HttpServlet {
 			// Comprobamos que nos han pasado bien los datos
 			if ((usuario != null) && (password != null)) {
 
-				if(usuarios!=null) {
+				if (usuarios != null) {
 					while (usuarios.next()) {
 						String usrBD = usuarios.getString("nombre");
 						String pasBD = usuarios.getString("password");
@@ -72,7 +72,7 @@ public class Login extends HttpServlet {
 					}
 
 				}
-				
+
 			}
 		} catch (SQLException e) {
 			// log

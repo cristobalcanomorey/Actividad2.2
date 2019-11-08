@@ -11,15 +11,15 @@ public class Hipoteca {
 	private int periodicidad;
 	private Date fecha;
 	private Usuario idUsuario;
-	
+
 	public Hipoteca(float pres, float inter, int plaz, int peri) {
 		this.prestamo = pres;
 		this.interes = inter;
 		this.plazo = plaz;
 		this.periodicidad = peri;
 	}
-	
-	public Hipoteca(int id,float pres, float inter, int plaz, int peri, Date fecha, Usuario idUsuario) {
+
+	public Hipoteca(int id, float pres, float inter, int plaz, int peri, Date fecha, Usuario idUsuario) {
 		this.id = id;
 		this.prestamo = pres;
 		this.interes = inter;
@@ -48,7 +48,7 @@ public class Hipoteca {
 	public int getPeriodicidad() {
 		return periodicidad;
 	}
-	
+
 	public void setFecha(Date fecha) {
 		this.fecha = fecha;
 	}
@@ -61,5 +61,4 @@ public class Hipoteca {
 		return idUsuario;
 	}
 
-	
 }
