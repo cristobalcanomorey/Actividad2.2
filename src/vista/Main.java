@@ -19,7 +19,7 @@ public class Main extends HttpServlet {
     	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException{
 		//página con/sin usuario
-		HtmlConstructor pagina = Control.creaPagina(1,1);
+		HtmlConstructor pagina = Control.creaPagina(1,1,null,false);
 		String prestamo = request.getParameter("capital");
 		String interes = request.getParameter("interes");
 		String plazo = request.getParameter("plazo");
@@ -28,13 +28,15 @@ public class Main extends HttpServlet {
 		try {
 			Hipoteca h = Control.generarHipoteca(prestamo,interes,plazo,periodicidad);
 			Calculo c = Control.calculaHipoteca(h,cuadro);
+			pagina = Control.creaPagina(1,1,h,cuadro);
 			pagina = Control.setResultado(pagina, c, h, cuadro);
 		} catch(NumberFormatException e) {
 			//log
 			e.printStackTrace();
 		} catch(NullPointerException e) {
-			//log
-			e.printStackTrace();
+			if(prestamo!=null^interes!=null^plazo!=null^periodicidad!=null) {
+				//log se ha dejado algun campo vacío
+			}
 		}
 		
 		try {

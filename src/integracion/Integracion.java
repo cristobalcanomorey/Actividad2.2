@@ -49,23 +49,33 @@ public class Integracion {
 		return tipoPagina;
 	}
 
-	public static ArrayList<String> tipoCuerpo(ArrayList<String> tipoPagina, int tipoDeCuerpo) {
+	public static ArrayList<String> tipoCuerpo(ArrayList<String> tipoPagina, int tipoDeCuerpo, Hipoteca h ,boolean cuadroChecked) {
+		String capital = "";
+		String interes = "";
+		String plazo = "";
+		String c = "";
+		if(h != null) {
+			capital = "value='"+h.getPrestamo()+"'";
+			interes = "value='"+h.getInteres()+"'";
+			plazo = "value='"+h.getPlazo()+"'";
+			if(cuadroChecked) {
+				c = "checked";
+			}
+		}
 		if (tipoDeCuerpo == 1) {
 			tipoPagina.add(5,
 					"<div id=\"formulario\">" + "<h2>Calcular</h2>" + "<form action=\"Main\" method=\"get\">"
-							+ "<p>Capital de prestamo:</p>" + "<input type=\"text\" name=\"capital\">"
-							+ "<p>Interes</p>" + "<input type=\"text\" name=\"interes\">" + "<p>Plazos</p>"
-							+ "<input type=\"text\" name=\"plazo\">" + "<p>Periodicidad</p>"
+							+ "<p>Capital de prestamo:</p>" + "<input type=\"text\" name=\"capital\" "+capital+">€"
+							+ "<p>Interes</p>" + "<input type=\"text\" name=\"interes\" "+interes+">%" + "<p>Plazos</p>"
+							+ "<input type=\"text\" name=\"plazo\" "+plazo+">años" + "<p>Periodicidad</p>"
 							+ "<select name=\"periodicidad\">" + "<option value=\"0\">mensual</option>"
 							+ "<option value=\"1\">trimestral</option>" + "<option value=\"2\">semestral</option>"
-							+ "</select>" + "<p>Visualizar cuadro de amortización</p>"
-							+ "<input type=\"checkbox\" name=\"cuadro\">" + "<a href=\"Main\">Reset</a>"
+							+ "</select>" + "<p><input type='checkbox' name='cuadro' "+c+">Visualizar cuadro de amortización</p>"
+							+ "<a href=\"Main\">Reset</a>"
 							+ "<input type=\"submit\" value=\"Calcular\">" + "</form>" + "</div>");
 		} else if (tipoDeCuerpo == 2) {
 			// Formulario de inicio de sesion
-		} else if (tipoDeCuerpo == 3) {
-			// Tabla con el cuadro
-		}
+		} 
 		return tipoPagina;
 	}
 

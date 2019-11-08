@@ -21,9 +21,9 @@ public class Control {
 		return calculo;
 	}
 	
-	public static HtmlConstructor creaPagina(int tipoPagina, int tipoCuerpo) {
+	public static HtmlConstructor creaPagina(int tipoPagina, int tipoCuerpo, Hipoteca h,boolean cuadroChecked) {
 		ArrayList<String> pagina = Integracion.tipoPagina(tipoPagina);
-		ArrayList<String> paginaConContenido = Integracion.tipoCuerpo(pagina, tipoCuerpo);
+		ArrayList<String> paginaConContenido = Integracion.tipoCuerpo(pagina, tipoCuerpo,h,cuadroChecked);
 		return new HtmlConstructor(paginaConContenido);
 	}
 
