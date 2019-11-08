@@ -37,8 +37,8 @@ public class Integracion {
 				+ "<link  href=\"css/style.css\" rel=\"stylesheet\" type=\"text/css\" title=\"Color\" />" + "</head>");
 		tipoPagina.add("<body>");
 		if (tipoDePagina == 1) {
-			tipoPagina.add("<ul id=\"menu\">" + "<li>Calculo hipotecario</li>"
-					+ "<li class=\"sesion\">Iniciar sesión</li>" + "</ul>");
+			tipoPagina.add("<ul id=\"menu\">" + "<li><a href='Main'>Calculo hipotecario</a></li>"
+					+ "<li class=\"sesion\"><a href='Registro'>Iniciar sesión</a></li>" + "</ul>");
 			tipoPagina.add("");
 		} else if (tipoDePagina == 2) {
 			// menu con usuario logeado
@@ -50,19 +50,19 @@ public class Integracion {
 	}
 
 	public static ArrayList<String> tipoCuerpo(ArrayList<String> tipoPagina, int tipoDeCuerpo, Hipoteca h ,boolean cuadroChecked) {
-		String capital = "";
-		String interes = "";
-		String plazo = "";
-		String c = "";
-		if(h != null) {
-			capital = "value='"+h.getPrestamo()+"'";
-			interes = "value='"+h.getInteres()+"'";
-			plazo = "value='"+h.getPlazo()+"'";
-			if(cuadroChecked) {
-				c = "checked";
-			}
-		}
 		if (tipoDeCuerpo == 1) {
+			String capital = "";
+			String interes = "";
+			String plazo = "";
+			String c = "";
+			if(h != null) {
+				capital = "value='"+h.getPrestamo()+"'";
+				interes = "value='"+h.getInteres()+"'";
+				plazo = "value='"+h.getPlazo()+"'";
+				if(cuadroChecked) {
+					c = "checked";
+				}
+			}
 			tipoPagina.add(5,
 					"<div id=\"formulario\">" + "<h2>Calcular</h2>" + "<form action=\"Main\" method=\"get\">"
 							+ "<p>Capital de prestamo:</p>" + "<input type=\"text\" name=\"capital\" "+capital+">€"
@@ -74,7 +74,17 @@ public class Integracion {
 							+ "<a href=\"Main\">Reset</a>"
 							+ "<input type=\"submit\" value=\"Calcular\">" + "</form>" + "</div>");
 		} else if (tipoDeCuerpo == 2) {
-			// Formulario de inicio de sesion
+			// Formulario de registrarse
+			tipoPagina.add(5,"<div id=\"registro\">\r\n" + 
+					"            <h2>Calcular</h2>\r\n" + 
+					"            <form action=\"post\" class=\"Registro\">\r\n" + 
+					"                <p>Nombre de usuario</p>\r\n" + 
+					"                <input type=\"text\" name=\"nombre\">\r\n" + 
+					"                <p>Contraseña</p>\r\n" + 
+					"                <input type=\"password\" name=\"password\">\r\n" + 
+					"                <input type=\"submit\" value=\"Registrar\">\r\n" + 
+					"            </form>\r\n" + 
+					"        </div>");
 		} 
 		return tipoPagina;
 	}

@@ -40,7 +40,7 @@ public class Main extends HttpServlet {
 		}
 		
 		try {
-			printResponse(pagina, response);
+			Control.printResponse(pagina, response);
 		} catch (IOException e) {
 			//log
 			e.printStackTrace();
@@ -51,19 +51,6 @@ public class Main extends HttpServlet {
 
 	}
 	
-	private void printResponse(HtmlConstructor pagina, HttpServletResponse response) throws IOException {
-		response.setContentType("text/html;charset=UTF-8");
-		PrintWriter writer = response.getWriter();
-		writer.print(pagina.getDoctype());
-		writer.print(pagina.getAbreHtml());
-		writer.print(pagina.getHead());
-		writer.print(pagina.getAbreBody());
-		writer.print(pagina.getNavBar());
-		writer.print(pagina.getCuerpo());
-		writer.print(pagina.getResultado());
-		writer.print(pagina.getCuadro());
-		writer.print(pagina.getCierraBody());
-		writer.print(pagina.getCierraHtml());
-	}
+	
 
 }
