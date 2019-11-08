@@ -153,7 +153,7 @@ public class Control {
 
 	public static Date getCurrentTime() {
 		// TODO Auto-generated method stub
-		return null;
+		return n;
 	}
 
 }
